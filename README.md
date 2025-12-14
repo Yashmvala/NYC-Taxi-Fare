@@ -1,4 +1,4 @@
-# NYC Taxi Fare Estimator — v2 (Zones + Rain)
+# NYC Taxi Fare Estimator 
 
 **Live app:** <paste your Hugging Face Space link here>  
 **Demo video:** <paste link when ready>  
