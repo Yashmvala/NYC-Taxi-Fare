@@ -1,6 +1,6 @@
 # NYC Taxi Fare Estimator 
 
-**Live app:** <paste your Hugging Face Space link here>  
+**Live app:** https://huggingface.co/spaces/Yashu0711/NYC-Taxi-Project
 **Demo video:** <paste link when ready>  
 
 ## What this does
