@@ -15,7 +15,7 @@ import pandas as pd
 import numpy as np
 import joblib
 from pathlib import Path
-from datetime import time
+from datetime import datetime, time
 
 # ---------------------------
 # 2) Basic page setup
@@ -52,22 +52,12 @@ c1, c2, c3 = st.columns(3)
 with c1:
     distance_km = st.number_input("Trip distance (km)", min_value=0.1, max_value=80.0, value=5.0, step=0.1)
 with c2:
-    pickup_time = st.time_input("Pickup time", value=datetime.now().time())
+    pickup_time = st.time_input("Pickup time", value=time(9, 0))
     pickup_hour = pickup_time.hour
 with c3:
     weekday = st.selectbox("Pickup day", ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"])
     passenger_count = st.number_input("Passengers", min_value=1, max_value=6, value=1, step=1)
-
-if "pickup_time" not in st.session_state:
-    st.session_state.pickup_time = time(9, 0) 
-
-pickup_time = st.time_input(
-    "Pickup time",
-    value=st.session_state.pickup_time,
-    key="pickup_time" 
-)
-pickup_hour = pickup_time.hour
-
+    
 st.subheader("Zones & Weather")
 pickup_zone  = st.selectbox("Pickup zone",  pickup_zone_list)
 dropoff_zone = st.selectbox("Drop-off zone", dropoff_zone_list)
