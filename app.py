@@ -15,7 +15,7 @@ import pandas as pd
 import numpy as np
 import joblib
 from pathlib import Path
-from datetime import datetime
+from datetime import time
 
 # ---------------------------
 # 2) Basic page setup
@@ -29,7 +29,7 @@ st.write("Enter trip details and click **Predict fare**. If the trained model is
 # ---------------------------
 MODEL_PATH = Path("models/model_v2.pkl")
 
-# TODO: replace these with the exact lists you printed in Colab
+
 pickup_zone_list  = ["Z4","Z12","Z41","Z48","Z68","Z79","Z87","Z100","Z132","Z138","Z158","Z170","Other"]
 dropoff_zone_list = ["Z4","Z12","Z41","Z48","Z68","Z79","Z87","Z100","Z132","Z138","Z158","Z170","Other"]
 
@@ -58,6 +58,16 @@ with c3:
     weekday = st.selectbox("Pickup day", ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"])
     passenger_count = st.number_input("Passengers", min_value=1, max_value=6, value=1, step=1)
 
+if "pickup_time" not in st.session_state:
+    st.session_state.pickup_time = time(9, 0) 
+
+pickup_time = st.time_input(
+    "Pickup time",
+    value=st.session_state.pickup_time,
+    key="pickup_time" 
+)
+pickup_hour = pickup_time.hour
+
 st.subheader("Zones & Weather")
 pickup_zone  = st.selectbox("Pickup zone",  pickup_zone_list)
 dropoff_zone = st.selectbox("Drop-off zone", dropoff_zone_list)
@@ -70,7 +80,6 @@ is_rush    = 1 if pickup_hour in [7,8,9,16,17,18,19] else 0
 
 # ---------------------------
 # 6) Fallback (transparent) formula
-#     Note: this is only used if the model is missing or errors.
 # ---------------------------
 def baseline_fare(d_km, wknd, pax, rush, pu_zone, do_zone, rain):
     base_fee = 3.0
